@@ -10,4 +10,10 @@
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
+    <string name="menu">MENU</string>
+    <string name="search_hint">搜索一下</string>
+    <string name="search">搜索</string>
+    <string name="menu_history">历史记录</string>
+    <string name="menu_password">修改密码</string>
+    <string name="menu_app">关于APP</string>
 </resources>
