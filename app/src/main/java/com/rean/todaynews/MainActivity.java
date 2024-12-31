@@ -1,29 +1,34 @@
 package com.rean.todaynews;
 
 import android.os.Bundle;
-import android.view.View;
-import android.view.Menu;
-
-import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.navigation.NavigationView;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
-import com.rean.todaynews.databinding.ActivityMainBinding;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.io.IOException;
+import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
-    private final String[] categories = {"娱乐", "军事", "教育", "文化", "健康", "财经", "体育", "汽车", "科技"};
+//    private final String[] categories = {"娱乐", "军事", "教育", "文化", "健康", "财经", "体育", "汽车", "科技"};
+
+    private final String typeUrl="https://www.mxnzp.com/api/news/types/v2?app_id=ngeorpqtkeijibqu&app_secret=ZWJlWXFzc21KNjYzVG9iakdBT3cydz09";
+
+    private List<TypeInfo> categories;
 
     private TabLayout tab_layout;
     private ViewPager2 view_pager;
@@ -33,6 +38,42 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // 初始化数据
+        getHttpData();
+
+        // 初始化控件
+
+    }
+
+    private void getHttpData(){
+        // 创建OkHttpClient对象
+        OkHttpClient client = new OkHttpClient();
+        // 创建Request对象
+        Request request = new Request.Builder().url(typeUrl).get().build();
+        // 创建Call对象
+        Call call = client.newCall(request);
+        // 同步请求
+        try (Response response = call.execute()){
+            if(response.body()!=null){
+                String responseData = response.body().string();
+                parseJson(responseData);
+                initView();
+            }
+            else {
+                Log.d("MainActivity", "getHttpData: response.body() is null");
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void parseJson(String responseData) {
+        Gson gson = new Gson();
+        TypeResponse response=gson.fromJson(responseData, TypeResponse.class);
+        categories=response.getData();
+    }
+
+    private void initView() {
         // 初始化控件
         tab_layout = findViewById(R.id.tab_layout);
         view_pager = findViewById(R.id.view_pager);
@@ -40,12 +81,12 @@ public class MainActivity extends AppCompatActivity {
             @NonNull
             @Override
             public Fragment createFragment(int position) {
-                return TabFragment.newInstance(categories[position]);
+                return TabFragment.newInstance(categories.get(position).getTypeName());
             }
 
             @Override
             public int getItemCount() {
-                return categories.length;
+                return categories.size();
             }
         });
 
@@ -53,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
         TabLayoutMediator mediator = new TabLayoutMediator(tab_layout, view_pager, new TabLayoutMediator.TabConfigurationStrategy() {
             @Override
             public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
-                tab.setText(categories[position]);
+                tab.setText(categories.get(position).getTypeName());
             }
         });
         mediator.attach();

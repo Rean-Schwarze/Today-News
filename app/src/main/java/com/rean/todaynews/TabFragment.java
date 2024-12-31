@@ -15,6 +15,8 @@ import android.view.ViewGroup;
  */
 public class TabFragment extends Fragment {
 
+    private String url="https://whyta.cn/api/tx/guonei?key=96f163cda80b";
+
     private static final String ARG_PARAM = "category";
     private String category;
 

@@ -47,4 +47,11 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+    //数据解析
+    implementation(libs.google.gson)
+    //图片加载
+    implementation(libs.github.glide)
+    //网络请求
+    implementation(libs.okhttp3.okhttp)
+
 }
