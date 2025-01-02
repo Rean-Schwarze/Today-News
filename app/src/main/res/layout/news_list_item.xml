@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_margin="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+<!--        新闻图片 -->
+        <ImageView
+            android:id="@+id/brief_news_img"
+            android:layout_width="128dp"
+            android:layout_height="96dp"/>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginStart="10dp">
+
+<!--            标题 -->
+            <TextView
+                android:id="@+id/brief_news_title"
+                android:layout_width="wrap_content"
+                android:layout_height="78dp"
+                android:maxLines="3"
+                android:textSize="17sp"
+                android:textColor="#222222"
+                android:text="习近平：巩固机构改革成果 推进治理体系和能力现代化哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈"/>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <!--            来源 -->
+                <TextView
+                    android:id="@+id/brief_news_src"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:textColor="#666666"
+                    android:text="北京日报客户端"/>
+
+                <TextView
+                    android:id="@+id/brief_news_time"
+                    android:paddingStart="15dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:textColor="#666666"
+                    android:text="2019年07月05日"
+                    tools:ignore="RtlSymmetry" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

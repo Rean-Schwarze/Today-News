@@ -2,10 +2,13 @@
 agp = "8.6.0"
 glide = "4.16.0"
 gson = "2.10.1"
+jacksonAnnotationsVersion = "2.11.1"
+jacksonCore = "2.11.1"
 junit = "4.13.2"
 junitVersion = "1.1.5"
 espressoCore = "3.5.1"
 appcompat = "1.6.1"
+lombok = "1.18.32"
 material = "1.10.0"
 constraintlayout = "2.1.4"
 lifecycleLivedataKtx = "2.6.1"
@@ -15,14 +18,18 @@ navigationUi = "2.6.0"
 okhttp = "4.11.0"
 
 [libraries]
+core-jackson-annotations = { module = "com.fasterxml.jackson.core:jackson-annotations", version.ref = "jacksonAnnotationsVersion" }
+fasterxml-jackson-databind = { module = "com.fasterxml.jackson.core:jackson-databind", version.ref = "jacksonAnnotationsVersion" }
 github-glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
 glide = { module = "com.github.bumptech.glide:glide" }
 google-gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 gson = { module = "com.google.code.gson:gson" }
+jackson-core = { module = "com.fasterxml.jackson.core:jackson-core", version.ref = "jacksonCore" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+lombok = { module = "org.projectlombok:lombok", version.ref = "lombok" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 lifecycle-livedata-ktx = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycleLivedataKtx" }

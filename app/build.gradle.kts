@@ -49,9 +49,19 @@ dependencies {
     androidTestImplementation(libs.espresso.core)
     //数据解析
     implementation(libs.google.gson)
+    implementation(libs.jackson.core)
+    implementation(libs.core.jackson.annotations)
+    implementation(libs.fasterxml.jackson.databind)
     //图片加载
     implementation(libs.github.glide)
     //网络请求
     implementation(libs.okhttp3.okhttp)
+
+    // lombok
+    compileOnly(libs.lombok)
+    annotationProcessor(libs.lombok)
+
+    testCompileOnly(libs.lombok)
+    testAnnotationProcessor(libs.lombok)
 
 }

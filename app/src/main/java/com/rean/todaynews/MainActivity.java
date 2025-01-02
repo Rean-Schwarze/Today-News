@@ -24,11 +24,9 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
-//    private final String[] categories = {"娱乐", "军事", "教育", "文化", "健康", "财经", "体育", "汽车", "科技"};
-
     private final String typeUrl="https://www.mxnzp.com/api/news/types/v2?app_id=ngeorpqtkeijibqu&app_secret=ZWJlWXFzc21KNjYzVG9iakdBT3cydz09";
 
-    private List<TypeInfo> categories;
+    private List<TypeInfo.DataDTO> categories;
 
     private TabLayout tab_layout;
     private ViewPager2 view_pager;
@@ -42,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         getHttpData();
 
         // 初始化控件
-
+        initView();
     }
 
     private void getHttpData(){
@@ -57,7 +55,6 @@ public class MainActivity extends AppCompatActivity {
             if(response.body()!=null){
                 String responseData = response.body().string();
                 parseJson(responseData);
-                initView();
             }
             else {
                 Log.d("MainActivity", "getHttpData: response.body() is null");
@@ -69,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void parseJson(String responseData) {
         Gson gson = new Gson();
-        TypeResponse response=gson.fromJson(responseData, TypeResponse.class);
+        TypeInfo response=gson.fromJson(responseData, TypeInfo.class);
         categories=response.getData();
     }
 
@@ -81,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
             @NonNull
             @Override
             public Fragment createFragment(int position) {
-                return TabFragment.newInstance(categories.get(position).getTypeName());
+                return TabFragment.newInstance(categories.get(position).getTypeId().toString());
             }
 
             @Override

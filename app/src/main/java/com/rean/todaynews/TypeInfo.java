@@ -1,27 +1,29 @@
 package com.rean.todaynews;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.util.List;
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
+@Data
 public class TypeInfo {
-    private String typeName;
-    private Integer typeId;
 
-    public TypeInfo(String typeName, Integer typeId) {
-        this.typeName = typeName;
-        this.typeId = typeId;
-    }
+    @JsonProperty("code")
+    private Integer code;
+    @JsonProperty("msg")
+    private String msg;
+    @JsonProperty("data")
+    private List<DataDTO> data;
 
-    public Integer getTypeId() {
-        return typeId;
-    }
-
-    public void setTypeId(Integer typeId) {
-        this.typeId = typeId;
-    }
-
-    public String getTypeName() {
-        return typeName;
-    }
-
-    public void setTypeName(String typeName) {
-        this.typeName = typeName;
+    @NoArgsConstructor
+    @Data
+    public static class DataDTO {
+        @JsonProperty("typeId")
+        private Integer typeId;
+        @JsonProperty("typeName")
+        private String typeName;
     }
 }
