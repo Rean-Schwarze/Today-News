@@ -1,24 +1,25 @@
 package com.rean.todaynews;
 
+import android.app.AlertDialog;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+import com.rean.todaynews.pojo.TypeInfo;
 
 import java.io.IOException;
 import java.util.List;
 
 import okhttp3.Call;
-import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -35,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        // 强制设置为竖屏
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         // 初始化数据
         getHttpData();

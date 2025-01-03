@@ -1,7 +1,8 @@
-package com.rean.todaynews;
+package com.rean.todaynews.pojo;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.io.Serializable;
 import java.util.List;
 
 import lombok.Data;
@@ -9,7 +10,7 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Data
-public class BriefNews {
+public class NewsBrief {
 
     @JsonProperty("code")
     private Integer code;
@@ -20,7 +21,7 @@ public class BriefNews {
 
     @NoArgsConstructor
     @Data
-    public static class DataDTO {
+    public static class DataDTO implements Serializable {
         @JsonProperty("title")
         private String title;
         @JsonProperty("imgList")

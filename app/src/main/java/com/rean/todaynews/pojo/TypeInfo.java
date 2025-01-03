@@ -1,4 +1,4 @@
-package com.rean.todaynews;
+package com.rean.todaynews.pojo;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

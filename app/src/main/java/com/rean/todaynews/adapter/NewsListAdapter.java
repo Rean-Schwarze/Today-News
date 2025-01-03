@@ -12,21 +12,31 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.rean.todaynews.BriefNews;
-import com.rean.todaynews.DateUtil;
+import com.rean.todaynews.pojo.NewsBrief;
+import com.rean.todaynews.util.DateUtil;
 import com.rean.todaynews.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.Getter;
+import lombok.Setter;
+
 public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.NewsViewHolder> {
 
-    private List<BriefNews.DataDTO> mListData=new ArrayList<>();
+    private List<NewsBrief.DataDTO> mListData=new ArrayList<>();
     private Context mContext;
 
     @SuppressLint("NotifyDataSetChanged")
-    public void setListData(List<BriefNews.DataDTO> listData) {
+    public void setListData(List<NewsBrief.DataDTO> listData) {
         this.mListData=listData;
+        // 通知数据更新
+        notifyDataSetChanged();
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    public void appendListData(List<NewsBrief.DataDTO> listData) {
+        this.mListData.addAll(listData);
         // 通知数据更新
         notifyDataSetChanged();
     }
@@ -46,12 +56,19 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.NewsVi
     @Override
     public void onBindViewHolder(@NonNull NewsViewHolder holder, int position) {
         // 绑定数据
-        BriefNews.DataDTO dataDTO = mListData.get(position);
+        NewsBrief.DataDTO dataDTO = mListData.get(position);
         holder.brief_news_title.setText(dataDTO.getTitle());
         holder.brief_news_src.setText(dataDTO.getSource());
         holder.brief_news_time.setText(DateUtil.getDurationToNow(dataDTO.getPostTime()));
         // 加载图片
         Glide.with(mContext).load(dataDTO.getImgList().get(0)).into(holder.brief_news_img);
+        // 点击事件
+        holder.itemView.setOnClickListener(v -> {
+            if (mOnNewsItemClickListener!=null){
+                mOnNewsItemClickListener.onNewsItemClick(dataDTO, position);
+            }
+        });
+
     }
 
     @Override
@@ -72,5 +89,13 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.NewsVi
             brief_news_src=itemView.findViewById(R.id.brief_news_src);
             brief_news_time=itemView.findViewById(R.id.brief_news_time);
         }
+    }
+
+    @Getter
+    @Setter
+    private onNewsItemClickListener mOnNewsItemClickListener;
+
+    public interface onNewsItemClickListener{
+        void onNewsItemClick(NewsBrief.DataDTO dataDTO, int position);
     }
 }

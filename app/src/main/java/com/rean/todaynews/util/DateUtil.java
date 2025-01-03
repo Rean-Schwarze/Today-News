@@ -1,4 +1,4 @@
-package com.rean.todaynews;
+package com.rean.todaynews.util;
 
 import android.annotation.SuppressLint;
 import android.util.Log;

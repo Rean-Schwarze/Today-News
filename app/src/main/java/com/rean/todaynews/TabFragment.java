@@ -1,12 +1,9 @@
 package com.rean.todaynews;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -16,8 +13,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.gson.Gson;
 import com.rean.todaynews.adapter.NewsListAdapter;
+import com.rean.todaynews.pojo.NewsBrief;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -44,23 +47,33 @@ public class TabFragment extends Fragment {
             super.handleMessage(msg);
             if (msg.what == 100) {
                 String responseData = (String) msg.obj;
-                BriefNews briefNews = new Gson().fromJson(responseData, BriefNews.class);
-                if (briefNews != null && briefNews.getData() != null) {
+                NewsBrief newsBrief = new Gson().fromJson(responseData, NewsBrief.class);
+                if (newsBrief != null && newsBrief.getData() != null) {
                     if (mNewsListAdapter != null) {
-                        mNewsListAdapter.setListData(briefNews.getData());
+                        if(page==1){
+                            mNewsListAdapter.setListData(newsBrief.getData());
+                        }
+                        else{
+                            mNewsListAdapter.appendListData(newsBrief.getData());
+                        }
                     }
+                    page++;
                 } else {
                     Toast.makeText(getActivity(), "数据获取失败", Toast.LENGTH_SHORT).show();
                 }
             }
+            dialog.dismiss();
         }
     };
+
+    private AlertDialog.Builder loadingDialog;
+    private Dialog dialog;
 
     private String oriUrl="https://www.mxnzp.com/api/news/list/v2?app_id=ngeorpqtkeijibqu&app_secret=ZWJlWXFzc21KNjYzVG9iakdBT3cydz09";
 
     private static final String ARG_PARAM = "typeId";
     private String typeId;
-
+    private Integer page;
 
     public TabFragment() {
         // Required empty public constructor
@@ -86,6 +99,7 @@ public class TabFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             typeId = getArguments().getString(ARG_PARAM);
+            page = 1;
         }
     }
 
@@ -97,6 +111,25 @@ public class TabFragment extends Fragment {
 
         // 初始化RecyclerView
         recyclerView = rootView.findViewById(R.id.recyclerView);
+
+        // 设置到达顶部和底部监听
+        RecyclerView.OnScrollListener onScrollListener = new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                if (!recyclerView.canScrollVertically(1)) { // 向下滑动到底部
+                    getHttpData(oriUrl + "&typeId=" + typeId + "&page=" + page);
+                } else if (!recyclerView.canScrollVertically(-1)) { // 向上滑动到顶部
+                    page = 1;
+                    getHttpData(oriUrl + "&typeId=" + typeId + "&page=" + page);
+                }
+            }
+
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+        };
+        recyclerView.addOnScrollListener(onScrollListener);
 
         return rootView;
     }
@@ -110,10 +143,25 @@ public class TabFragment extends Fragment {
         // 设置适配器
         recyclerView.setAdapter(mNewsListAdapter);
 
-        getHttpData(oriUrl+"&typeId="+typeId+"&page=1");
+        // 设置加载框
+        loadingDialog = new AlertDialog.Builder(getActivity());
+        loadingDialog.setCancelable(false);
+        loadingDialog.setView(R.layout.loading_dialog);
+
+        getHttpData(oriUrl+"&typeId="+typeId+"&page="+page);
+
+        // recyclerView设置点击事件
+        mNewsListAdapter.setMOnNewsItemClickListener((dataDTO, position) -> {
+            // 跳转到详情页
+            Intent intent = new Intent(getActivity(), NewsDetailActivity.class);
+            intent.putExtra("dataDTO", dataDTO); // 对象需实现Serializable接口
+            startActivity(intent);
+        });
     }
 
     private void getHttpData(String url){
+        // 显示加载框
+        dialog = loadingDialog.show();
         // 创建OkHttpClient对象
         OkHttpClient client = new OkHttpClient();
         // 创建Request对象
