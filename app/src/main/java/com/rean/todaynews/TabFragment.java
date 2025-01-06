@@ -20,7 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
 import com.rean.todaynews.adapter.NewsListAdapter;
-import com.rean.todaynews.pojo.NewsBrief;
+import com.rean.todaynews.pojo.News;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -47,14 +47,14 @@ public class TabFragment extends Fragment {
             super.handleMessage(msg);
             if (msg.what == 100) {
                 String responseData = (String) msg.obj;
-                NewsBrief newsBrief = new Gson().fromJson(responseData, NewsBrief.class);
-                if (newsBrief != null && newsBrief.getData() != null) {
+                News news = new Gson().fromJson(responseData, News.class);
+                if (news != null && news.getData() != null) {
                     if (mNewsListAdapter != null) {
                         if(page==1){
-                            mNewsListAdapter.setListData(newsBrief.getData());
+                            mNewsListAdapter.setListData(news.getData().getList());
                         }
                         else{
-                            mNewsListAdapter.appendListData(newsBrief.getData());
+                            mNewsListAdapter.appendListData(news.getData().getList());
                         }
                     }
                     page++;
@@ -69,7 +69,7 @@ public class TabFragment extends Fragment {
     private AlertDialog.Builder loadingDialog;
     private Dialog dialog;
 
-    private String oriUrl="https://www.mxnzp.com/api/news/list/v2?app_id=ngeorpqtkeijibqu&app_secret=ZWJlWXFzc21KNjYzVG9iakdBT3cydz09";
+    private String oriUrl="https://apis.tianapi.com/allnews/index?key=4eaa1b03d3fd3599e76ad23768fde053&num=10";
 
     private static final String ARG_PARAM = "typeId";
     private String typeId;
@@ -117,10 +117,10 @@ public class TabFragment extends Fragment {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 if (!recyclerView.canScrollVertically(1)) { // 向下滑动到底部
-                    getHttpData(oriUrl + "&typeId=" + typeId + "&page=" + page);
+                    getHttpData(oriUrl + "&col=" + typeId + "&page=" + page);
                 } else if (!recyclerView.canScrollVertically(-1)) { // 向上滑动到顶部
                     page = 1;
-                    getHttpData(oriUrl + "&typeId=" + typeId + "&page=" + page);
+                    getHttpData(oriUrl + "&col=" + typeId + "&page=" + page);
                 }
             }
 
@@ -145,10 +145,10 @@ public class TabFragment extends Fragment {
 
         // 设置加载框
         loadingDialog = new AlertDialog.Builder(getActivity());
-        loadingDialog.setCancelable(false);
+//        loadingDialog.setCancelable(false);
         loadingDialog.setView(R.layout.loading_dialog);
 
-        getHttpData(oriUrl+"&typeId="+typeId+"&page="+page);
+        getHttpData(oriUrl+"&col="+typeId+"&page="+page);
 
         // recyclerView设置点击事件
         mNewsListAdapter.setMOnNewsItemClickListener((dataDTO, position) -> {

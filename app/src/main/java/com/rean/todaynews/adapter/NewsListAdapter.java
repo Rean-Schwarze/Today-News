@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.rean.todaynews.pojo.NewsBrief;
+import com.rean.todaynews.pojo.News;
 import com.rean.todaynews.util.DateUtil;
 import com.rean.todaynews.R;
 
@@ -24,18 +24,18 @@ import lombok.Setter;
 
 public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.NewsViewHolder> {
 
-    private List<NewsBrief.DataDTO> mListData=new ArrayList<>();
+    private List<News.DataDTO.ListDTO> mListData=new ArrayList<>();
     private Context mContext;
 
     @SuppressLint("NotifyDataSetChanged")
-    public void setListData(List<NewsBrief.DataDTO> listData) {
+    public void setListData(List<News.DataDTO.ListDTO> listData) {
         this.mListData=listData;
         // 通知数据更新
         notifyDataSetChanged();
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    public void appendListData(List<NewsBrief.DataDTO> listData) {
+    public void appendListData(List<News.DataDTO.ListDTO> listData) {
         this.mListData.addAll(listData);
         // 通知数据更新
         notifyDataSetChanged();
@@ -56,16 +56,16 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.NewsVi
     @Override
     public void onBindViewHolder(@NonNull NewsViewHolder holder, int position) {
         // 绑定数据
-        NewsBrief.DataDTO dataDTO = mListData.get(position);
-        holder.brief_news_title.setText(dataDTO.getTitle());
-        holder.brief_news_src.setText(dataDTO.getSource());
-        holder.brief_news_time.setText(DateUtil.getDurationToNow(dataDTO.getPostTime()));
+        News.DataDTO.ListDTO listDTO = mListData.get(position);
+        holder.brief_news_title.setText(listDTO.getTitle());
+        holder.brief_news_src.setText(listDTO.getSource());
+        holder.brief_news_time.setText(DateUtil.getDurationToNow(listDTO.getCtime()));
         // 加载图片
-        Glide.with(mContext).load(dataDTO.getImgList().get(0)).into(holder.brief_news_img);
+        Glide.with(mContext).load(listDTO.getPicUrl()).error(R.mipmap.error_load).into(holder.brief_news_img);
         // 点击事件
         holder.itemView.setOnClickListener(v -> {
             if (mOnNewsItemClickListener!=null){
-                mOnNewsItemClickListener.onNewsItemClick(dataDTO, position);
+                mOnNewsItemClickListener.onNewsItemClick(listDTO, position);
             }
         });
 
@@ -96,6 +96,6 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.NewsVi
     private onNewsItemClickListener mOnNewsItemClickListener;
 
     public interface onNewsItemClickListener{
-        void onNewsItemClick(NewsBrief.DataDTO dataDTO, int position);
+        void onNewsItemClick(News.DataDTO.ListDTO listDTO, int position);
     }
 }

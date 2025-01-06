@@ -17,6 +17,7 @@ import com.google.gson.Gson;
 import com.rean.todaynews.pojo.TypeInfo;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 
 import okhttp3.Call;
@@ -25,9 +26,9 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
-    private final String typeUrl="https://www.mxnzp.com/api/news/types/v2?app_id=ngeorpqtkeijibqu&app_secret=ZWJlWXFzc21KNjYzVG9iakdBT3cydz09";
+    private final String typeUrl="https://apis.tianapi.com/channellist/index?key=4eaa1b03d3fd3599e76ad23768fde053";
 
-    private List<TypeInfo.DataDTO> categories;
+    private List<TypeInfo.DataDTO.ListDTO> categories;
 
     private TabLayout tab_layout;
     private ViewPager2 view_pager;
@@ -70,7 +71,37 @@ public class MainActivity extends AppCompatActivity {
     private void parseJson(String responseData) {
         Gson gson = new Gson();
         TypeInfo response=gson.fromJson(responseData, TypeInfo.class);
-        categories=response.getData();
+        categories=response.getData().getList().get(0);
+        for(TypeInfo.DataDTO.ListDTO category:categories){
+            if(category.getName().contains("新浪宠物")){
+                category.setName("宠物");
+                continue;
+            }
+            if(category.getName().contains("科学探索")){
+                category.setName("科学");
+                continue;
+            }
+            if(category.getName().contains("健康知识")){
+                category.setName("健康");
+                continue;
+            }
+            if(category.getName().contains("VR")){
+                category.setName("VR");
+                continue;
+            }
+            if(category.getName().contains("人工智能")){
+                category.setName("AI");
+                continue;
+            }
+            category.setName(category.getName().split("新闻")[0].split("资讯")[0]);
+        }
+        for(TypeInfo.DataDTO.ListDTO category:categories){
+            if(category.getName().contains("垃圾分类")){
+                categories.remove(category);
+                break;
+            }
+        }
+        Collections.reverse(categories);
     }
 
     private void initView() {
@@ -81,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
             @NonNull
             @Override
             public Fragment createFragment(int position) {
-                return TabFragment.newInstance(categories.get(position).getTypeId().toString());
+                return TabFragment.newInstance(categories.get(position).getColid().toString());
             }
 
             @Override
@@ -94,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
         TabLayoutMediator mediator = new TabLayoutMediator(tab_layout, view_pager, new TabLayoutMediator.TabConfigurationStrategy() {
             @Override
             public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
-                tab.setText(categories.get(position).getTypeName());
+                tab.setText(categories.get(position).getName());
             }
         });
         mediator.attach();

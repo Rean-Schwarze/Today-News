@@ -12,7 +12,7 @@ public class DateUtil {
     public static String getDurationToNow(String dateStr) {
         Date date;
         try {
-            date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(dateStr);
+            date = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(dateStr);
             assert date != null;
             long duration = System.currentTimeMillis() - date.getTime();
             long days = duration / (24 * 60 * 60 * 1000);

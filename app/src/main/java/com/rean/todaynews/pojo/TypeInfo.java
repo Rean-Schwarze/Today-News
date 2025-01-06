@@ -1,6 +1,6 @@
 package com.rean.todaynews.pojo;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
@@ -11,19 +11,30 @@ import lombok.NoArgsConstructor;
 @Data
 public class TypeInfo {
 
-    @JsonProperty("code")
+    @SerializedName("code")
     private Integer code;
-    @JsonProperty("msg")
+    @SerializedName("msg")
     private String msg;
-    @JsonProperty("data")
-    private List<DataDTO> data;
+    @SerializedName("result")
+    private DataDTO data;
 
     @NoArgsConstructor
     @Data
     public static class DataDTO {
-        @JsonProperty("typeId")
-        private Integer typeId;
-        @JsonProperty("typeName")
-        private String typeName;
+        @SerializedName("list")
+        private List<List<ListDTO>> list;
+
+        @NoArgsConstructor
+        @Data
+        public static class ListDTO {
+            @SerializedName("colid")
+            private Integer colid;
+            @SerializedName("name")
+            private String name;
+            @SerializedName("nameid")
+            private String nameid;
+            @SerializedName("jianjie")
+            private String jianjie;
+        }
     }
 }
