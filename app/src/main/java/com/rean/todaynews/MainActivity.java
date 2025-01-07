@@ -1,16 +1,21 @@
 package com.rean.todaynews;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.gson.Gson;
@@ -32,6 +37,9 @@ public class MainActivity extends AppCompatActivity {
 
     private TabLayout tab_layout;
     private ViewPager2 view_pager;
+    private NavigationView nav_view;
+    private Toolbar toolbar;
+    private DrawerLayout drawer_layout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,6 +116,10 @@ public class MainActivity extends AppCompatActivity {
         // 初始化控件
         tab_layout = findViewById(R.id.tab_layout);
         view_pager = findViewById(R.id.view_pager);
+        nav_view = findViewById(R.id.nav_view);
+        toolbar = findViewById(R.id.main_bar_nav);
+        drawer_layout = findViewById(R.id.drawer_layout);
+
         view_pager.setAdapter(new FragmentStateAdapter(this) {
             @NonNull
             @Override
@@ -145,6 +157,19 @@ public class MainActivity extends AppCompatActivity {
             public void onTabReselected(TabLayout.Tab tab) {
 
             }
+        });
+
+        // nav_view 点击事件
+        nav_view.setNavigationItemSelectedListener(item -> {
+            if(item.getItemId()==R.id.nav_history){
+                startActivity(new Intent(MainActivity.this,HistoryListActivity.class));
+            }
+            return true;
+        });
+
+        // toolbar 点击事件
+        toolbar.setOnClickListener(v -> {
+            drawer_layout.openDrawer(nav_view);
         });
     }
 }

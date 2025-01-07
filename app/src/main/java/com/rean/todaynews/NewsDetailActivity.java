@@ -13,6 +13,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.gson.Gson;
+import com.rean.todaynews.db.HistoryDbHelper;
 import com.rean.todaynews.pojo.News;
 
 public class NewsDetailActivity extends AppCompatActivity {
@@ -56,6 +58,9 @@ public class NewsDetailActivity extends AppCompatActivity {
         if(listDTO !=null){
             toolbar.setTitle(listDTO.getTitle());
             webView.loadUrl(listDTO.getUrl());
+
+            // 添加历史记录
+            HistoryDbHelper.getInstance(this).insertHistory(listDTO.getId(),10000, new Gson().toJson(listDTO));
         }
 
         // 返回
