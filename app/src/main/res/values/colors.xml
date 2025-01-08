@@ -14,4 +14,7 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="stroke_gray">#cecfd4</color>
+    <color name="login_text_grey">#4f4f55</color>
+    <color name="register_desc_text_grey">#939393</color>
 </resources>

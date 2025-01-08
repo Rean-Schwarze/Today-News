@@ -15,7 +15,7 @@
         android:background="@color/theme_500"
         app:title="@string/menu"
         app:titleTextColor="@color/white"
-        app:navigationIcon="@drawable/baseline_arrow_back_24"/>
+        app:navigationIcon="@drawable/baseline_arrow_back_white_24"/>
 
     <WebView
         android:id="@+id/news_detail_webView"
