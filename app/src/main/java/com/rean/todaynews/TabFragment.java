@@ -62,7 +62,7 @@ public class TabFragment extends Fragment {
                     Toast.makeText(getActivity(), "数据获取失败", Toast.LENGTH_SHORT).show();
                 }
             }
-            dialog.dismiss();
+            if(dialog!=null) dialog.dismiss();
         }
     };
 
@@ -161,7 +161,7 @@ public class TabFragment extends Fragment {
 
     private void getHttpData(String url){
         // 显示加载框
-        dialog = loadingDialog.show();
+        if(dialog!=null) dialog = loadingDialog.show();
         // 创建OkHttpClient对象
         OkHttpClient client = new OkHttpClient();
         // 创建Request对象

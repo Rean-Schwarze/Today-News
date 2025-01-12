@@ -17,4 +17,8 @@
     <color name="stroke_gray">#cecfd4</color>
     <color name="login_text_grey">#4f4f55</color>
     <color name="register_desc_text_grey">#939393</color>
+    <color name="user_center_line_grey">#999999</color>
+    <color name="user_center_desc_grey">#FBF4F4</color>
+    <color name="user_center_text_black">#2d2d2d</color>
+    <color name="user_center_divide_grey">#f3f3f3</color>
 </resources>

@@ -41,6 +41,8 @@ public class UserDbHelper extends SQLiteOpenHelper {
                 "username TEXT, " +
                 "password TEXT," +
                 "phone TEXT," +
+                "avatar TEXT," +
+                "userdesc TEXT," +
                 "type INTEGER DEFAULT 0)"); // 0:普通用户 1:管理员
 //        db.execSQL("UPDATE SQLITE_SEQUENCE SET user_id = 100000 WHERE name = 'user'");
     }
@@ -95,9 +97,27 @@ public class UserDbHelper extends SQLiteOpenHelper {
             userInfo.setPhone(cursor.getString(cursor.getColumnIndex("phone")));
             userInfo.setType(cursor.getInt(cursor.getColumnIndex("type")));
             userInfo.setPassword(cursor.getString(cursor.getColumnIndex("password")));
+            userInfo.setAvatar(cursor.getString(cursor.getColumnIndex("avatar")));
+            userInfo.setUserdesc(cursor.getString(cursor.getColumnIndex("userdesc")));
         }
         cursor.close();
         db.close();
         return userInfo;
+    }
+
+    /**
+     * 重置密码
+     *
+     * @param user_id 用户 id
+     * @param newPwd  新 PWD
+     * @return int
+     */
+    public int resetPwd(Integer user_id, String newPwd){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("password", Md5Util.getMD5String(newPwd));
+        int res = db.update("user", values, "user_id = ?", new String[]{String.valueOf(user_id)});
+        db.close();
+        return res;
     }
 }

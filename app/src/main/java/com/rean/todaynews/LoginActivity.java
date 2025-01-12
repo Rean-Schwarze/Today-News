@@ -39,6 +39,11 @@ public class LoginActivity extends AppCompatActivity {
 
         mSharedPreferences = getSharedPreferences("user", MODE_PRIVATE);
 
+        // 初始化控件
+        et_phone = findViewById(R.id.login_et_phone);
+        et_password = findViewById(R.id.login_et_password);
+        cb_remember_password = findViewById(R.id.login_cb_remember_password);
+
         // 是否记住密码
         isRememberPassword = mSharedPreferences.getBoolean("remember_password", false);
         if (isRememberPassword) {
@@ -46,11 +51,6 @@ public class LoginActivity extends AppCompatActivity {
             et_password.setText(mSharedPreferences.getString("password", ""));
             cb_remember_password.setChecked(true);
         }
-
-        // 初始化控件
-        et_phone = findViewById(R.id.login_et_phone);
-        et_password = findViewById(R.id.login_et_password);
-        cb_remember_password = findViewById(R.id.login_cb_remember_password);
 
         // 点击注册
         findViewById(R.id.login_register_btn).setOnClickListener(v -> {
@@ -74,7 +74,7 @@ public class LoginActivity extends AppCompatActivity {
                         // 登录成功，保存用户信息
                         @SuppressLint("CommitPrefEdits")
                         SharedPreferences.Editor editor = mSharedPreferences.edit();
-                        editor.putBoolean("isRememberPassword", true);
+                        editor.putBoolean("remember_password", true);
                         editor.putString("phone", phone);
                         editor.putString("password", password);
                         editor.apply();

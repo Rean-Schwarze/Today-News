@@ -26,7 +26,19 @@
     <string name="remind_password_zh">记住密码</string>
     <string name="default_username_zh">未登录用户</string>
     <string name="enter_phone_zh">请输入手机号</string>
+    <string name="enter_old_password_zh">请输入旧密码</string>
+    <string name="enter_new_password_zh">请输入新密码</string>
     <string name="enter_password_zh">请输入密码</string>
     <string name="enter_username_zh">请输入用户名</string>
     <string name="enter_password_confirm_zh">请再次输入密码确认</string>
+    <string name="edit_info_zh">修改资料</string>
+    <string name="my_collection_zh">我的收藏</string>
+    <string name="feedback_and_help_zh">反馈与帮助</string>
+    <string name="my_message_zh">我的消息</string>
+    <string name="setting_zh">设置</string>
+    <string name="privacy_policy_zh">隐私政策</string>
+    <string name="about_us_zh">关于我们</string>
+    <string name="switch_account_zh">切换账号</string>
+    <string name="exit_login_zh">退出登录</string>
+    <string name="confirm_zh">确定</string>
 </resources>
