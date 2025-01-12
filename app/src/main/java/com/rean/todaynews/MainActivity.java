@@ -6,6 +6,9 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,6 +23,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.gson.Gson;
 import com.rean.todaynews.pojo.TypeInfo;
+import com.rean.todaynews.pojo.UserInfo;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -37,9 +41,15 @@ public class MainActivity extends AppCompatActivity {
 
     private TabLayout tab_layout;
     private ViewPager2 view_pager;
+
     private NavigationView nav_view;
     private Toolbar toolbar;
     private DrawerLayout drawer_layout;
+    private TextView nav_username;
+    private TextView nav_user_phone;
+    private ImageView nav_avatar;
+
+    private UserInfo loginUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,9 +126,13 @@ public class MainActivity extends AppCompatActivity {
         // 初始化控件
         tab_layout = findViewById(R.id.tab_layout);
         view_pager = findViewById(R.id.view_pager);
+
         nav_view = findViewById(R.id.nav_view);
         toolbar = findViewById(R.id.main_bar_nav);
         drawer_layout = findViewById(R.id.drawer_layout);
+        nav_username = nav_view.getHeaderView(0).findViewById(R.id.nav_username);
+        nav_user_phone = nav_view.getHeaderView(0).findViewById(R.id.nav_user_phone);
+        nav_avatar = nav_view.getHeaderView(0).findViewById(R.id.nav_avatar);
 
         view_pager.setAdapter(new FragmentStateAdapter(this) {
             @NonNull
@@ -164,12 +178,40 @@ public class MainActivity extends AppCompatActivity {
             if(item.getItemId()==R.id.nav_history){
                 startActivity(new Intent(MainActivity.this,HistoryListActivity.class));
             }
+//            else if(item.getItemId()==R.id.nav_resetPwd){
+//                startActivity(new Intent(MainActivity.this,ResetPwdActivity.class));
+//            }
             return true;
         });
 
-        // toolbar 点击事件
-        toolbar.setOnClickListener(v -> {
-            drawer_layout.openDrawer(nav_view);
+        // nav_avatar 点击事件
+        nav_avatar.setOnClickListener(v -> {
+            if(loginUser==null){
+                // 未登录，跳转到登录页面
+                startActivity(new Intent(MainActivity.this,LoginActivity.class));
+            }
+            else{
+                // 已登录，跳转到用户中心页面
+                startActivity(new Intent(MainActivity.this,UserCenterActivity.class));
+            }
         });
+
+        // toolbar 点击事件
+        toolbar.setOnClickListener(v -> drawer_layout.openDrawer(nav_view));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        loginUser = UserInfo.getUserInfo();
+        if(loginUser!=null){
+            nav_username.setText(loginUser.getUsername());
+            nav_user_phone.setText(loginUser.getPhone());
+        }
+        else{
+            nav_username.setText("未登录用户");
+            nav_user_phone.setText("点击头像登录");
+        }
     }
 }

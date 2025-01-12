@@ -51,8 +51,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginStart="10dp"
-                android:background="null"
-                android:hint="请输入手机号" />
+                android:background="@null"
+                android:hint="@string/enter_phone_zh" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -75,23 +75,43 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginStart="10dp"
-                android:background="null"
+                android:background="@null"
                 android:textColor="@color/login_text_grey"
                 android:inputType="textPassword"
-                android:hint="请输入密码" />
+                android:hint="@string/enter_password_zh" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
-        <TextView
-            android:layout_marginTop="5dp"
-            android:layout_gravity="right"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/register_account_zh"/>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <CheckBox
+                android:id="@+id/login_cb_remember_password"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/remind_password_zh"/>
+
+            <TextView
+                android:layout_centerVertical="true"
+                android:id="@+id/login_register_btn"
+                android:layout_marginTop="5dp"
+                android:layout_alignParentEnd="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/register_account_zh"/>
+
+        </RelativeLayout>
+
+
         
         <Button
+            android:id="@+id/login_btn"
             android:background="@drawable/rounded_button"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="15dp"
             android:layout_marginBottom="25dp"
             android:layout_width="match_parent"
             android:layout_height="50dp"

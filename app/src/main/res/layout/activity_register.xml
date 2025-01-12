@@ -57,8 +57,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginStart="10dp"
-                android:background="null"
-                android:hint="请输入手机号" />
+                android:background="@null"
+                android:hint="@string/enter_phone_zh" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -81,8 +81,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginStart="10dp"
-                android:background="null"
-                android:hint="请输入用户名" />
+                android:background="@null"
+                android:hint="@string/enter_username_zh" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -105,10 +105,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginStart="10dp"
-                android:background="null"
+                android:background="@null"
                 android:textColor="@color/login_text_grey"
                 android:inputType="textPassword"
-                android:hint="请输入密码" />
+                android:hint="@string/enter_password_zh" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -131,14 +131,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginStart="10dp"
-                android:background="null"
+                android:background="@null"
                 android:textColor="@color/login_text_grey"
                 android:inputType="textPassword"
-                android:hint="请再次输入密码确认" />
+                android:hint="@string/enter_password_confirm_zh" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <Button
+            android:id="@+id/register_btn"
             android:background="@drawable/rounded_button"
             android:layout_marginTop="26dp"
             android:layout_marginBottom="25dp"
