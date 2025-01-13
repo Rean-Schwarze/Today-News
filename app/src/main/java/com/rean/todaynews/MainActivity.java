@@ -1,20 +1,22 @@
 package com.rean.todaynews;
 
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -43,11 +45,13 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager2 view_pager;
 
     private NavigationView nav_view;
-    private Toolbar toolbar;
     private DrawerLayout drawer_layout;
-    private TextView nav_username;
-    private TextView nav_user_phone;
-    private ImageView nav_avatar;
+    private TextView nav_username, nav_user_phone;
+    private ImageView nav_avatar, nav_menu;
+    private EditText search_text;
+    private TextView search_btn;
+    private boolean is_search = false; // 是否处于搜索状态
+    private int cur_typeId;
 
     private UserInfo loginUser;
 
@@ -91,10 +95,6 @@ public class MainActivity extends AppCompatActivity {
         TypeInfo response=gson.fromJson(responseData, TypeInfo.class);
         categories=response.getData().getList().get(0);
         for(TypeInfo.DataDTO.ListDTO category:categories){
-            if(category.getName().contains("新浪宠物")){
-                category.setName("宠物");
-                continue;
-            }
             if(category.getName().contains("科学探索")){
                 category.setName("科学");
                 continue;
@@ -103,23 +103,22 @@ public class MainActivity extends AppCompatActivity {
                 category.setName("健康");
                 continue;
             }
-            if(category.getName().contains("VR")){
-                category.setName("VR");
-                continue;
-            }
             if(category.getName().contains("人工智能")){
                 category.setName("AI");
                 continue;
             }
             category.setName(category.getName().split("新闻")[0].split("资讯")[0]);
         }
-        for(TypeInfo.DataDTO.ListDTO category:categories){
-            if(category.getName().contains("垃圾分类")){
-                categories.remove(category);
-                break;
-            }
-        }
+        categories.removeIf(category -> category.getName().contains("垃圾分类")
+                || category.getName().contains("新浪宠物") || category.getName().contains("NBA")
+                || category.getName().contains("足球")  || category.getName().contains("创业")
+                || category.getName().contains("苹果")  || category.getName().contains("VR")
+                || category.getName().contains("CBA")  || category.getName().contains("互联网")
+                || category.getName().contains("汉服")  || category.getName().contains("环保")
+                || category.getName().contains("女性")  || category.getName().contains("电竞")
+                || category.getName().contains("财经")  || category.getName().contains("农业"));
         Collections.reverse(categories);
+        if(!categories.isEmpty()) cur_typeId = categories.get(0).getColid();
     }
 
     private void initView() {
@@ -128,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
         view_pager = findViewById(R.id.view_pager);
 
         nav_view = findViewById(R.id.nav_view);
-        toolbar = findViewById(R.id.main_bar_nav);
+        nav_menu = findViewById(R.id.main_bav_menu);
         drawer_layout = findViewById(R.id.drawer_layout);
         nav_username = nav_view.getHeaderView(0).findViewById(R.id.nav_username);
         nav_user_phone = nav_view.getHeaderView(0).findViewById(R.id.nav_user_phone);
@@ -162,6 +161,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 view_pager.setCurrentItem(tab.getPosition());
+                cur_typeId = categories.get(tab.getPosition()).getColid();
+                onClickTab();
             }
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
@@ -173,14 +174,67 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // 初始化搜索控件
+        search_text = findViewById(R.id.search_text); // 搜索框
+        search_btn = findViewById(R.id.search_button);
+        // 搜索按钮点击事件
+        search_btn.setOnClickListener(v -> {
+            if(!is_search){
+                String word = search_text.getText().toString(); // 获取搜索框内容
+                if(word.isEmpty()){
+                    Toast.makeText(this, "请输入搜索内容", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    is_search = true;
+                    search_btn.setText("清除搜索结果");
+                    onClickSearch(word);
+                }
+            }
+            else{
+                is_search = false;
+                search_btn.setText("搜索"); // 重置搜索按钮
+                onClickSearch("");
+                search_text.setText("");
+            }
+        });
+
         // nav_view 点击事件
         nav_view.setNavigationItemSelectedListener(item -> {
             if(item.getItemId()==R.id.nav_history){
                 startActivity(new Intent(MainActivity.this,HistoryListActivity.class));
             }
-//            else if(item.getItemId()==R.id.nav_resetPwd){
-//                startActivity(new Intent(MainActivity.this,ResetPwdActivity.class));
-//            }
+            else if(item.getItemId()==R.id.nav_user_center){
+                if(loginUser==null){
+                    // 未登录，跳转到登录页面
+                    Toast.makeText(this, "请先登录", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(MainActivity.this,LoginActivity.class));
+                }
+                else{
+                    startActivity(new Intent(MainActivity.this,UserCenterActivity.class));
+                }
+            }
+            else if(item.getItemId()==R.id.nav_exit_login){
+                if(loginUser!=null){
+                    new AlertDialog.Builder(this)
+                            .setTitle("提示")
+                            .setMessage("确定要退出登录吗？")
+                            .setNegativeButton("取消", (dialog, which) -> {
+
+                            })
+                            .setPositiveButton("确定", (dialog, which) -> {
+                                UserInfo.clearUserInfo(); // 清除用户信息
+                                Toast.makeText(this, "退出登录成功", Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(MainActivity.this,LoginActivity.class));
+                            })
+                            .show();
+                }
+                else{
+                    Toast.makeText(this, "请先登录", Toast.LENGTH_SHORT).show();
+                }
+            }
+            else if(item.getItemId()==R.id.nav_about){
+                startActivity(new Intent(MainActivity.this,AboutActivity.class));
+            }
             return true;
         });
 
@@ -197,7 +251,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // toolbar 点击事件
-        toolbar.setOnClickListener(v -> drawer_layout.openDrawer(nav_view));
+        nav_menu.setOnClickListener(v -> drawer_layout.openDrawer(nav_view));
     }
 
     @Override
@@ -212,6 +266,36 @@ public class MainActivity extends AppCompatActivity {
         else{
             nav_username.setText("未登录用户");
             nav_user_phone.setText("点击头像登录");
+        }
+    }
+
+    private void onClickTab(){
+        // 获取 FragmentManager
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        // 获取当前添加的所有 Fragment
+        for (Fragment fragment : fragmentManager.getFragments()) {
+            if (fragment instanceof TabFragment) {
+                TabFragment tabFragment = (TabFragment) fragment;
+                if (tabFragment.getTypeId().equals(String.valueOf(cur_typeId))) {
+                    tabFragment.firstClick();
+                    break;
+                }
+            }
+        }
+    }
+
+    private void onClickSearch(String word){
+        // 获取 FragmentManager
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        // 获取当前添加的所有 Fragment
+        for (Fragment fragment : fragmentManager.getFragments()) {
+            if (fragment instanceof TabFragment) {
+                TabFragment tabFragment = (TabFragment) fragment;
+                if (tabFragment.getTypeId().equals(String.valueOf(cur_typeId))) {
+                    tabFragment.search(word);
+                    break;
+                }
+            }
         }
     }
 }

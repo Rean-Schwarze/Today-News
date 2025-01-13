@@ -11,6 +11,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -23,8 +25,10 @@ import com.rean.todaynews.adapter.NewsListAdapter;
 import com.rean.todaynews.pojo.News;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Objects;
 
+import lombok.Getter;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -56,10 +60,14 @@ public class TabFragment extends Fragment {
                         else{
                             mNewsListAdapter.appendListData(news.getData().getList());
                         }
+                        is_loaded = true;
                     }
-                    page++;
                 } else {
-                    Toast.makeText(getActivity(), "数据获取失败", Toast.LENGTH_SHORT).show();
+                    assert news != null;
+                    Toast.makeText(getActivity(), "数据获取失败："+news.getMsg(), Toast.LENGTH_SHORT).show();
+                    if (mNewsListAdapter != null) {
+                        mNewsListAdapter.setListData(new ArrayList<>());
+                    }
                 }
             }
             if(dialog!=null) dialog.dismiss();
@@ -69,11 +77,17 @@ public class TabFragment extends Fragment {
     private AlertDialog.Builder loadingDialog;
     private Dialog dialog;
 
-    private String oriUrl="https://apis.tianapi.com/allnews/index?key=4eaa1b03d3fd3599e76ad23768fde053&num=10";
+    private final String oriUrl="https://apis.tianapi.com/allnews/index?key=4eaa1b03d3fd3599e76ad23768fde053&num=10";
+    private final String search_base = "https://apis.tianapi.com/generalnews/index?key=4eaa1b03d3fd3599e76ad23768fde053&num=10";
 
     private static final String ARG_PARAM = "typeId";
+    @Getter
     private String typeId;
-    private Integer page;
+    private Integer page = 1;
+    private boolean is_search = false;
+    private boolean is_first = true;
+    private boolean is_loaded = false;
+    private String search_key = "";
 
     public TabFragment() {
         // Required empty public constructor
@@ -116,11 +130,14 @@ public class TabFragment extends Fragment {
         RecyclerView.OnScrollListener onScrollListener = new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                if (!recyclerView.canScrollVertically(1)) { // 向下滑动到底部
-                    getHttpData(oriUrl + "&col=" + typeId + "&page=" + page);
-                } else if (!recyclerView.canScrollVertically(-1)) { // 向上滑动到顶部
-                    page = 1;
-                    getHttpData(oriUrl + "&col=" + typeId + "&page=" + page);
+                if(is_loaded){
+                    if (!recyclerView.canScrollVertically(1) && dy > 0) { // 向下滑动到底部
+                        page++;
+                        onScrollAction();
+                    } else if (!recyclerView.canScrollVertically(-1) && dy < 0) { // 向上滑动到顶部
+                        page = 1;
+                        onScrollAction();
+                    }
                 }
             }
 
@@ -132,6 +149,15 @@ public class TabFragment extends Fragment {
         recyclerView.addOnScrollListener(onScrollListener);
 
         return rootView;
+    }
+
+    private void onScrollAction() {
+        if(!is_search){
+            getHttpData(oriUrl + "&col=" + typeId + "&page=" + page);
+        }
+        else{
+            getHttpData(search_base + "&word=" + search_key + "&page=" + page);
+        }
     }
 
     @Override
@@ -148,7 +174,10 @@ public class TabFragment extends Fragment {
 //        loadingDialog.setCancelable(false);
         loadingDialog.setView(R.layout.loading_dialog);
 
-        getHttpData(oriUrl+"&col="+typeId+"&page="+page);
+        if(typeId.equals("5") || typeId.equals("7")){
+            is_first = false;
+            getHttpData(oriUrl+"&col="+typeId+"&page="+page);
+        }
 
         // recyclerView设置点击事件
         mNewsListAdapter.setMOnNewsItemClickListener((dataDTO, position) -> {
@@ -187,5 +216,26 @@ public class TabFragment extends Fragment {
                 mHandler.sendMessage(message);
             }
         });
+    }
+
+    public void firstClick(){
+        if(is_first){
+            page = 1;
+            getHttpData(oriUrl + "&col=" + typeId + "&page=" + page);
+            is_first = false;
+        }
+    }
+
+    public void search(String word){
+        if(!word.isEmpty()){
+            is_search = true;
+            search_key = word;
+            getHttpData(search_base + "&page=" + page + "&word=" + word);
+        }
+        else{
+            is_search = false;
+            search_key = "";
+            getHttpData(oriUrl + "&col=" + typeId + "&page=" + page);
+        }
     }
 }

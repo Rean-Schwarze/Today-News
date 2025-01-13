@@ -96,6 +96,11 @@ public class UserCenterActivity extends AppCompatActivity {
                     })
                     .show();
         });
+
+        // 关于我们
+        findViewById(R.id.user_center_about_us).setOnClickListener(v -> {
+            startActivity(new Intent(this,AboutActivity.class));
+        });
     }
 
     @Override

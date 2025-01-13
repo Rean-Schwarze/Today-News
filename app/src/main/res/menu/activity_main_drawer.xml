@@ -5,16 +5,20 @@
 
     <group android:checkableBehavior="single">
         <item
+            android:id="@+id/nav_user_center"
+            android:icon="@drawable/baseline_account_box_24"
+            android:title="@string/user_center_zh" />
+        <item
             android:id="@+id/nav_history"
             android:icon="@drawable/baseline_history_24"
             android:title="@string/menu_history" />
         <item
-            android:id="@+id/nav_resetPwd"
-            android:icon="@drawable/baseline_https_24"
-            android:title="@string/menu_password" />
-        <item
             android:id="@+id/nav_about"
             android:icon="@drawable/baseline_info_24"
-            android:title="@string/menu_app" />
+            android:title="@string/about_us_zh" />
+        <item
+            android:id="@+id/nav_exit_login"
+            android:icon="@drawable/baseline_power_settings_new_red_24"
+            android:title="@string/exit_login_zh" />
     </group>
 </menu>

@@ -7,16 +7,20 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <androidx.appcompat.widget.Toolbar
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/main_bar_nav"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:navigationIcon="@drawable/baseline_menu_24"
+        android:layout_height="55dp"
+        android:gravity="center"
         android:background="@color/theme_500">
 
         <ImageView
+            android:id="@+id/main_bav_menu"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
+            android:src="@drawable/baseline_menu_24"
             android:contentDescription="@string/menu" />
 
         <RelativeLayout
@@ -25,22 +29,25 @@
             android:paddingEnd="10dp"
             tools:ignore="RtlSymmetry">
 
-            <TextView
+            <EditText
+                android:id="@+id/search_text"
                 android:layout_toStartOf="@id/search_button"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:background="@color/white"
-                android:padding="10dp"
-
+                android:paddingStart="15dp"
+                android:textSize="14sp"
                 android:hint="@string/search_hint"/>
 
             <TextView
                 android:id="@+id/search_button"
                 android:layout_alignParentEnd="true"
-                android:layout_width="60dp"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="55dp"
+                android:gravity="center"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
                 android:textColor="@color/white"
                 android:textAlignment="center"
                 android:text="@string/search"/>
@@ -48,7 +55,7 @@
         </RelativeLayout>
 
 
-    </androidx.appcompat.widget.Toolbar>
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:orientation="vertical"

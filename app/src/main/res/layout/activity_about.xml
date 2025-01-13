@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AboutActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/about_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/theme_500"
+        app:navigationIcon="@drawable/baseline_arrow_back_white_24"
+        app:titleTextColor="@color/white" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_marginTop="50dp"
+                android:layout_gravity="center"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@mipmap/logo"/>
+
+            <TextView
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:textColor="@color/user_center_text_black"
+                android:text="@string/today_news_zh"/>
+
+            <TextView
+                android:id="@+id/about_version"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:textColor="@color/user_center_text_black"
+                android:text="@string/version_1_0_0"/>
+
+            <RelativeLayout
+                android:id="@+id/about_update_log"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:layout_marginTop="25dp"
+                android:layout_width="match_parent"
+                android:layout_height="60dp">
+
+                <TextView
+                    android:layout_marginStart="12dp"
+                    android:layout_centerVertical="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/update_log_zh"
+                    android:textSize="16sp"
+                    android:textColor="@color/user_center_text_black"/>
+
+                <ImageView
+                    android:layout_marginEnd="8dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/baseline_keyboard_arrow_right_grey_24"/>
+
+                <View
+                    android:background="@color/stroke_gray"
+                    android:layout_alignParentBottom="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/about_check_update"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="60dp">
+
+                <TextView
+                    android:layout_marginStart="12dp"
+                    android:layout_centerVertical="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/check_update_zh"
+                    android:textSize="16sp"
+                    android:textColor="@color/user_center_text_black"/>
+
+                <ImageView
+                    android:layout_marginEnd="8dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/baseline_keyboard_arrow_right_grey_24"/>
+
+                <View
+                    android:background="@color/stroke_gray"
+                    android:layout_alignParentBottom="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"/>
+
+            </RelativeLayout>
+
+            <TextView
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="200dp"
+                android:text="@string/developed_by_rean"
+                android:textSize="14sp"
+                android:textColor="@color/register_desc_text_grey"/>
+
+            <TextView
+                android:id="@+id/about_repo_link"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autoLink="web"
+                android:text="@string/repo_link_zh"
+                android:textSize="14sp"
+                android:textColor="@color/theme_500"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </ScrollView>
+
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>
