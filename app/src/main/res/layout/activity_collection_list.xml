@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CollectionListActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/collection_list_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/theme_500"
+        app:menu="@menu/collection_menu"
+        app:title="我的收藏"
+        app:titleTextColor="@color/white"
+        app:navigationIcon="@drawable/baseline_arrow_back_white_24"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/collection_list_recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical"
+            tools:listitem="@layout/news_list_item"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/collection_bottom_dialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="#e6e6e6"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="#e5e5e5"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="#ffffff">
+
+            <TextView
+                android:id="@+id/tv_has_selected"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="15dp"
+                android:text="@string/has_selected_zh"
+                android:textColor="#1A1A1A"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/tv_select_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="9dp"
+                android:layout_toEndOf="@+id/tv_has_selected"
+                android:text="0"
+                android:textColor="#1A1A1A"
+                android:textSize="14sp"/>
+
+            <Button
+                android:id="@+id/btn_delete"
+                android:layout_width="80dp"
+                android:layout_height="33dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="15dp"
+                android:paddingTop="0dp"
+                android:enabled="false"
+                android:gravity="center"
+                android:background="@drawable/button_notclickable_shape"
+                android:text="@string/delete_zh"
+                android:textColor="@color/white"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/select_all"
+                android:layout_width="80dp"
+                android:layout_height="33dp"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="15dp"
+                android:layout_toStartOf="@+id/btn_delete"
+                android:gravity="center"
+                android:text="@string/select_all_zh"
+                android:textColor="#000001"
+                android:textSize="14sp"/>
+
+        </RelativeLayout>
+    </LinearLayout>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

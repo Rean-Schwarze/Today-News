@@ -16,6 +16,7 @@ import com.rean.todaynews.adapter.NewsListAdapter;
 import com.rean.todaynews.db.HistoryDbHelper;
 import com.rean.todaynews.pojo.HistoryInfo;
 import com.rean.todaynews.pojo.News;
+import com.rean.todaynews.pojo.UserInfo;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -28,6 +29,8 @@ public class HistoryListActivity extends AppCompatActivity {
     private NewsListAdapter newsListAdapter;
 
     private List<News.DataDTO.ListDTO> list = new ArrayList<>();
+    private UserInfo loginUser;
+    private int user_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,8 +55,12 @@ public class HistoryListActivity extends AppCompatActivity {
         // 设置适配器
         recyclerView.setAdapter(newsListAdapter);
 
+        loginUser = UserInfo.getUserInfo();
+        if(loginUser != null) user_id = loginUser.getId();
+        else user_id = 10000;
+
         // 获取并设置数据
-        List<HistoryInfo> historyInfoList = HistoryDbHelper.getInstance(this).queryUserHistory(10000);
+        List<HistoryInfo> historyInfoList = HistoryDbHelper.getInstance(this).queryUserHistory(user_id);
         Gson gson = new Gson();
         if (historyInfoList != null && !historyInfoList.isEmpty()) {
             for(HistoryInfo historyInfo : historyInfoList) {

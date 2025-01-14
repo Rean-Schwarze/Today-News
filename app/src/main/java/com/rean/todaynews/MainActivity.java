@@ -162,7 +162,6 @@ public class MainActivity extends AppCompatActivity {
             public void onTabSelected(TabLayout.Tab tab) {
                 view_pager.setCurrentItem(tab.getPosition());
                 cur_typeId = categories.get(tab.getPosition()).getColid();
-                onClickTab();
             }
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
@@ -270,21 +269,6 @@ public class MainActivity extends AppCompatActivity {
         else{
             nav_username.setText("未登录用户");
             nav_user_phone.setText("点击头像登录");
-        }
-    }
-
-    private void onClickTab(){
-        // 获取 FragmentManager
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        // 获取当前添加的所有 Fragment
-        for (Fragment fragment : fragmentManager.getFragments()) {
-            if (fragment instanceof TabFragment) {
-                TabFragment tabFragment = (TabFragment) fragment;
-                if (tabFragment.getTypeId().equals(String.valueOf(cur_typeId))) {
-                    tabFragment.firstClick();
-                    break;
-                }
-            }
         }
     }
 

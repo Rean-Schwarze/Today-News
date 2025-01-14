@@ -114,7 +114,7 @@ public class UserCenterActivity extends AppCompatActivity {
 
         // 我的收藏
         findViewById(R.id.user_center_my_collection).setOnClickListener(v -> {
-            Toast.makeText(this, "功能开发中", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this,CollectionListActivity.class));
         });
 
         // 设置

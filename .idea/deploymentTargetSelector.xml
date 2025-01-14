@@ -4,10 +4,10 @@
     <selectionStates>
       <SelectionState runConfigName="今日新闻">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2025-01-12T15:41:42.538089800Z">
+        <DropdownSelection timestamp="2025-01-14T08:17:49.613991300Z">
           <Target type="DEFAULT_BOOT">
             <handle>
-              <DeviceId pluginId="Default" identifier="serial=localhost:7555;connection=96ebb8ad" />
+              <DeviceId pluginId="Default" identifier="serial=localhost:7555;connection=c97b6ac9" />
             </handle>
           </Target>
         </DropdownSelection>

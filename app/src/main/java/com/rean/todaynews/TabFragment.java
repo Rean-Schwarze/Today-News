@@ -83,7 +83,6 @@ public class TabFragment extends Fragment {
     private String typeId;
     private Integer page = 1;
     private boolean is_search = false;
-    private boolean is_first = true;
     private boolean is_loaded = false;
     private String search_key = "";
 
@@ -172,10 +171,7 @@ public class TabFragment extends Fragment {
 //        loadingDialog.setCancelable(false);
         loadingDialog.setView(R.layout.loading_dialog);
 
-        if(typeId.equals("5") || typeId.equals("7")){
-            is_first = false;
-            getHttpData(oriUrl+"&col="+typeId+"&page="+page);
-        }
+        getHttpData(oriUrl+"&col="+typeId+"&page="+page);
 
         // recyclerView设置点击事件
         mNewsListAdapter.setMOnNewsItemClickListener((dataDTO, position) -> {
@@ -214,14 +210,6 @@ public class TabFragment extends Fragment {
                 mHandler.sendMessage(message);
             }
         });
-    }
-
-    public void firstClick(){
-        if(is_first){
-            page = 1;
-            getHttpData(oriUrl + "&col=" + typeId + "&page=" + page);
-            is_first = false;
-        }
     }
 
     public void search(String word){

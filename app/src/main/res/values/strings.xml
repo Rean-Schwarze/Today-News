@@ -46,4 +46,11 @@
     <string name="repo_link_zh"><a href="https://github.com/Rean-Schwarze/Today-News">仓库地址</a></string>
     <string name="enter_desc_zh">请输入简介</string>
     <string name="save_zh">保存</string>
+    <string name="collect_zh">收藏</string>
+    <string name="edit_zh">编辑</string>
+    <string name="has_selected_zh">已选择</string>
+    <string name="delete_zh">删除</string>
+    <string name="select_all_zh">全选</string>
+    <string name="cancel_zh">取消</string>
+    <string name="hint_zh">提示</string>
 </resources>

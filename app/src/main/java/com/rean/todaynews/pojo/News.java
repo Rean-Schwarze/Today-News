@@ -47,6 +47,8 @@ public class News {
             private String picUrl;
             @SerializedName("url")
             private String url;
+            @SerializedName("isSelected")
+            private boolean isSelected;
         }
     }
 }

@@ -4,6 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+    <ImageView
+        android:id="@+id/check_box"
+        android:src="@mipmap/ic_uncheck"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="12dp"
+        android:gravity="center"
+        android:visibility="gone"/>
+
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_margin="12dp"
         android:layout_width="match_parent"
