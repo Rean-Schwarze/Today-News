@@ -1,12 +1,12 @@
 package com.rean.todaynews;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -19,6 +19,7 @@ public class ResetPwdActivity extends AppCompatActivity {
 
     private EditText reset_pwd_old_pwd, reset_pwd_new_pwd, reset_pwd_confirm_pwd;
     private UserInfo loginUser;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,9 +36,10 @@ public class ResetPwdActivity extends AppCompatActivity {
         reset_pwd_new_pwd = findViewById(R.id.reset_pwd_new_pwd);
         reset_pwd_old_pwd = findViewById(R.id.reset_pwd_old_pwd);
         reset_pwd_confirm_pwd = findViewById(R.id.reset_pwd_confirm_pwd);
+        toolbar = findViewById(R.id.reset_pwd_toolbar);
 
         // 设置toolbar
-        findViewById(R.id.reset_pwd_toolbar).setOnClickListener(v->finish());
+        toolbar.setNavigationOnClickListener(v->finish());
 
         // 点击修改密码
         findViewById(R.id.reset_pwd_btn).setOnClickListener(v->{

@@ -1,13 +1,12 @@
 package com.rean.todaynews;
 
-import android.annotation.SuppressLint;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -17,6 +16,7 @@ import com.rean.todaynews.db.UserDbHelper;
 public class RegisterActivity extends AppCompatActivity {
 
     private EditText et_username, et_password, et_phone, et_password_confirm;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +34,7 @@ public class RegisterActivity extends AppCompatActivity {
         et_password = findViewById(R.id.register_et_password);
         et_phone = findViewById(R.id.register_et_phone);
         et_password_confirm = findViewById(R.id.register_et_password_confirm);
+        toolbar = findViewById(R.id.register_toolbar);
 
         // 注册
         findViewById(R.id.register_btn).setOnClickListener(v -> {
@@ -68,6 +69,6 @@ public class RegisterActivity extends AppCompatActivity {
         });
 
         // 返回
-        findViewById(R.id.register_toolbar).setOnClickListener(v -> finish());
+        toolbar.setNavigationOnClickListener(v -> finish());
     }
 }

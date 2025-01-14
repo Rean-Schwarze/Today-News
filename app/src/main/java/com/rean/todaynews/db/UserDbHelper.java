@@ -12,8 +12,6 @@ import androidx.annotation.Nullable;
 import com.rean.todaynews.pojo.UserInfo;
 import com.rean.todaynews.util.Md5Util;
 
-import java.util.Objects;
-
 public class UserDbHelper extends SQLiteOpenHelper {
     private static UserDbHelper instance;
     private static final int DB_VERSION = 1;
@@ -41,7 +39,7 @@ public class UserDbHelper extends SQLiteOpenHelper {
                 "username TEXT, " +
                 "password TEXT," +
                 "phone TEXT," +
-                "avatar TEXT," +
+                "avatar BLOB," +
                 "userdesc TEXT," +
                 "type INTEGER DEFAULT 0)"); // 0:普通用户 1:管理员
 //        db.execSQL("UPDATE SQLITE_SEQUENCE SET user_id = 100000 WHERE name = 'user'");
@@ -97,7 +95,7 @@ public class UserDbHelper extends SQLiteOpenHelper {
             userInfo.setPhone(cursor.getString(cursor.getColumnIndex("phone")));
             userInfo.setType(cursor.getInt(cursor.getColumnIndex("type")));
             userInfo.setPassword(cursor.getString(cursor.getColumnIndex("password")));
-            userInfo.setAvatar(cursor.getString(cursor.getColumnIndex("avatar")));
+            userInfo.setAvatar(cursor.getBlob(cursor.getColumnIndex("avatar")));
             userInfo.setUserdesc(cursor.getString(cursor.getColumnIndex("userdesc")));
         }
         cursor.close();
@@ -116,6 +114,40 @@ public class UserDbHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("password", Md5Util.getMD5String(newPwd));
+        int res = db.update("user", values, "user_id = ?", new String[]{String.valueOf(user_id)});
+        db.close();
+        return res;
+    }
+
+    /**
+     * 更新用户信息
+     *
+     * @param user_id  用户 ID
+     * @param username 用户名
+     * @param userdesc 用户简介
+     * @return int
+     */
+    public int updateUserInfo(Integer user_id, String username, String userdesc){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("username", username);
+        values.put("userdesc", userdesc);
+        int res = db.update("user", values, "user_id = ?", new String[]{String.valueOf(user_id)});
+        db.close();
+        return res;
+    }
+
+    /**
+     * 更新用户头像
+     *
+     * @param user_id 用户 ID
+     * @param avatar  头像（byte[]）
+     * @return int
+     */
+    public int updateUserAvatar(Integer user_id, byte[] avatar){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("avatar", avatar);
         int res = db.update("user", values, "user_id = ?", new String[]{String.valueOf(user_id)});
         db.close();
         return res;

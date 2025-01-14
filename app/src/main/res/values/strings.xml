@@ -44,4 +44,6 @@
     <string name="developed_by_rean">developed by Rean</string>
     <string name="user_center_zh">用户中心</string>
     <string name="repo_link_zh"><a href="https://github.com/Rean-Schwarze/Today-News">仓库地址</a></string>
+    <string name="enter_desc_zh">请输入简介</string>
+    <string name="save_zh">保存</string>
 </resources>

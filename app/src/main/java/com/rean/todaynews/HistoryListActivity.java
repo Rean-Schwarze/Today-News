@@ -45,7 +45,7 @@ public class HistoryListActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.history_list_recyclerView);
 
         // 设置toolbar
-        toolbar.setOnClickListener(v -> finish());
+        toolbar.setNavigationOnClickListener(v -> finish());
 
         // 初始化适配器
         newsListAdapter = new NewsListAdapter(this);

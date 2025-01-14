@@ -1,17 +1,18 @@
 package com.rean.todaynews;
 
-import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -45,19 +46,22 @@ public class UserCenterActivity extends AppCompatActivity {
         iv_avatar = findViewById(R.id.user_center_avatar);
 
         // 设置toolbar
-        toolbar.setOnClickListener(v -> finish());
+        toolbar.setNavigationOnClickListener(v -> finish());
 
         // 设置用户数据
         loginUser = UserInfo.getUserInfo();
         if(loginUser!=null){
             tv_username.setText(loginUser.getUsername());
-            if(loginUser.getUserdesc()!=null){
+            if(loginUser.getUserdesc()!=null && !loginUser.getUserdesc().isEmpty()){
                 tv_desc.setText(loginUser.getUserdesc());
             }
             else{
                 tv_desc.setText("这个人很懒，什么都没有留下");
             }
-//            iv_avatar.setImageResource(loginUser.getAvatar());
+            if(loginUser.getAvatar()!=null){
+                Bitmap bitmap = BitmapFactory.decodeByteArray(loginUser.getAvatar(), 0, loginUser.getAvatar().length);
+                iv_avatar.setImageBitmap(bitmap);
+            }
         }
 
         // 切换账号
@@ -82,6 +86,12 @@ public class UserCenterActivity extends AppCompatActivity {
             startActivityForResult(intent,1002);
         });
 
+        // 修改资料
+        findViewById(R.id.user_center_edit_info).setOnClickListener(v -> {
+            Intent intent = new Intent(this, UpdateUserInfoActivity.class);
+            startActivityForResult(intent,1004);
+        });
+
         // 退出登录
         findViewById(R.id.user_center_exit).setOnClickListener(v -> {
             new AlertDialog.Builder(this)
@@ -97,6 +107,31 @@ public class UserCenterActivity extends AppCompatActivity {
                     .show();
         });
 
+        // 我的消息
+        findViewById(R.id.user_center_my_message).setOnClickListener(v -> {
+            Toast.makeText(this, "功能开发中", Toast.LENGTH_SHORT).show();
+        });
+
+        // 我的收藏
+        findViewById(R.id.user_center_my_collection).setOnClickListener(v -> {
+            Toast.makeText(this, "功能开发中", Toast.LENGTH_SHORT).show();
+        });
+
+        // 设置
+        findViewById(R.id.user_center_setting).setOnClickListener(v -> {
+            Toast.makeText(this, "功能开发中", Toast.LENGTH_SHORT).show();
+        });
+
+        // 反馈
+        findViewById(R.id.user_center_feedback).setOnClickListener(v -> {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/Rean-Schwarze/Today-News/issues")));
+        });
+
+        // 隐私政策
+        findViewById(R.id.user_center_privacy).setOnClickListener(v -> {
+            Toast.makeText(this, "功能开发中", Toast.LENGTH_SHORT).show();
+        });
+
         // 关于我们
         findViewById(R.id.user_center_about_us).setOnClickListener(v -> {
             startActivity(new Intent(this,AboutActivity.class));
@@ -109,6 +144,22 @@ public class UserCenterActivity extends AppCompatActivity {
         if(resultCode==1002){
             this.finish();
             startActivity(new Intent(this,LoginActivity.class));
+        }
+        else if(resultCode==1004){
+            loginUser = UserInfo.getUserInfo();
+            if(loginUser!=null){
+                tv_username.setText(loginUser.getUsername());
+                if(loginUser.getUserdesc()!=null && !loginUser.getUserdesc().isEmpty()){
+                    tv_desc.setText(loginUser.getUserdesc());
+                }
+                else{
+                    tv_desc.setText("这个人很懒，什么都没有留下");
+                }
+                if(loginUser.getAvatar()!=null){
+                    Bitmap bitmap = BitmapFactory.decodeByteArray(loginUser.getAvatar(), 0, loginUser.getAvatar().length);
+                    iv_avatar.setImageBitmap(bitmap);
+                }
+            }
         }
     }
 }

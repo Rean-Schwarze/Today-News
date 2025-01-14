@@ -1,121 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".LoginActivity">
+    tools:context=".UpdateUserInfoActivity">
 
-    <ImageView
-        android:src="@mipmap/login_img"
-        android:scaleType="centerCrop"
-        android:background="@color/theme_500"
-        android:layout_width="match_parent"
-        android:layout_height="320dp"
-        android:paddingTop="50dp"/>
-
-    <TextView
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/update_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        android:textColor="@color/black"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="5dp"
-        android:text="登陆"/>
+        android:background="@color/theme_500"
+        app:navigationIcon="@drawable/baseline_arrow_back_white_24"
+        app:title="修改资料"
+        app:titleTextColor="@color/white" />
 
     <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_margin="26dp"
         android:orientation="vertical"
-        android:layout_margin="26dp">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.cardview.widget.CardView
+            android:layout_gravity="center"
+            app:cardCornerRadius="50dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp">
+
+        <ImageView
+            android:id="@+id/update_avatar"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:srcCompat="@mipmap/default_avatar" />
+
+        </androidx.cardview.widget.CardView>
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:background="@drawable/login_et_bg"
             android:layout_width="match_parent"
             android:layout_height="60dp"
+            android:layout_marginTop="30dp"
             android:paddingStart="10dp"
             android:paddingEnd="10dp">
 
             <ImageView
-                android:src="@drawable/baseline_phone_android_24"
+                android:src="@drawable/baseline_account_box_24"
                 android:layout_gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
             <EditText
-                android:id="@+id/login_et_phone"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="10dp"
-                android:background="@null"
-                android:hint="@string/enter_phone_zh" />
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:background="@drawable/login_et_bg"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginTop="40dp"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp">
-
-            <ImageView
-                android:src="@drawable/baseline_lock_24"
-                android:layout_gravity="center_vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-            <EditText
-                android:id="@+id/login_et_password"
+                android:id="@+id/update_username"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginStart="10dp"
                 android:background="@null"
                 android:textColor="@color/login_text_grey"
-                android:inputType="textPassword"
-                android:hint="@string/enter_password_zh" />
+                android:hint="@string/enter_username_zh" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
-
-
-        <RelativeLayout
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:background="@drawable/login_et_bg"
+            android:layout_marginTop="30dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="60dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp">
 
-            <CheckBox
-                android:id="@+id/login_cb_remember_password"
-                android:layout_centerVertical="true"
+            <ImageView
+                android:src="@drawable/baseline_edit_theme_24"
+                android:layout_gravity="center_vertical"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/remind_password_zh"/>
+                android:layout_height="wrap_content"/>
 
-            <TextView
-                android:layout_centerVertical="true"
-                android:id="@+id/login_register_btn"
-                android:layout_marginTop="5dp"
-                android:layout_alignParentEnd="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/register_account_zh"/>
+            <EditText
+                android:id="@+id/update_desc"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="10dp"
+                android:background="@null"
+                android:textColor="@color/login_text_grey"
+                android:hint="@string/enter_desc_zh" />
 
-        </RelativeLayout>
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
-
-        
+        <TextView
+            android:layout_marginTop="35dp"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="13sp"
+            android:text="更换头像后需要点击保存"/>
         <Button
-            android:id="@+id/login_btn"
+            android:id="@+id/update_save_btn"
             android:background="@drawable/rounded_button"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="3dp"
             android:layout_marginBottom="25dp"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:textSize="16sp"
-            android:text="@string/login_zh"/>
+            android:text="@string/save_zh"/>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 

@@ -12,9 +12,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.rean.todaynews.R;
 import com.rean.todaynews.pojo.News;
 import com.rean.todaynews.util.DateUtil;
-import com.rean.todaynews.R;
 
 import java.util.ArrayList;
 import java.util.List;

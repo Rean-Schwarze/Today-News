@@ -31,8 +31,15 @@ public class WelcomeActivity extends AppCompatActivity {
 
         // 初始化倒计时
         tv_countdown = findViewById(R.id.welcome_countdown);
+        tv_countdown.setOnClickListener(v -> {
+            if(countDownTimer!=null){
+                countDownTimer.cancel();
+                // 跳转到主页面
+                startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
+                finish();
+            }
+        });
         startCountdown();
-
     }
 
     private void startCountdown(){

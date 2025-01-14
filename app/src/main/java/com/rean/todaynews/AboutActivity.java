@@ -2,22 +2,14 @@ package com.rean.todaynews;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.Html;
-import android.text.SpannableString;
-import android.text.Spanned;
-import android.text.method.LinkMovementMethod;
-import android.text.style.ClickableSpan;
-import android.text.style.ForegroundColorSpan;
-import android.text.style.UnderlineSpan;
-import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -25,6 +17,7 @@ import androidx.core.view.WindowInsetsCompat;
 public class AboutActivity extends AppCompatActivity {
 
     private TextView about_repo_link;
+    private Toolbar toolbar;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -40,9 +33,15 @@ public class AboutActivity extends AppCompatActivity {
 
         // 初始化控件
         about_repo_link = findViewById(R.id.about_repo_link);
+        toolbar = findViewById(R.id.about_toolbar);
 
         // 设置toolbar
-        findViewById(R.id.about_toolbar).setOnClickListener(v -> finish());
+        toolbar.setNavigationOnClickListener(v -> finish());
+
+        // 更新日志
+        findViewById(R.id.about_update_log).setOnClickListener(v->{
+            Toast.makeText(this, "功能开发中", Toast.LENGTH_SHORT).show();
+        });
 
         // 设置链接
         about_repo_link.setOnClickListener(v -> {

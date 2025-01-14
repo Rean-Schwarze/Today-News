@@ -14,7 +14,7 @@ public class UserInfo {
     private String username;
     private String password;
     private String phone;
-    private String avatar;
+    private byte[] avatar;
     private String userdesc;
     private Integer type; // 0:普通用户 1:管理员
 
