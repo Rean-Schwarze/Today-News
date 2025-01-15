@@ -49,7 +49,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
                 android:textColor="@color/user_center_text_black"
-                android:text="@string/version_1_0_0"/>
+                android:text="@string/version_1_0_1"/>
 
             <RelativeLayout
                 android:id="@+id/about_update_log"

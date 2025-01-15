@@ -20,6 +20,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
@@ -264,6 +265,9 @@ public class MainActivity extends AppCompatActivity {
             if(loginUser.getAvatar()!=null){
                 Bitmap bitmap = BitmapFactory.decodeByteArray(loginUser.getAvatar(), 0, loginUser.getAvatar().length);
                 nav_avatar.setImageBitmap(bitmap);
+            }
+            else{
+                Glide.with(this).load(R.mipmap.default_avatar).into(nav_avatar);
             }
         }
         else{
